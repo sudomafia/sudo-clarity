@@ -38,23 +38,22 @@ export default function Viz({ data }) {
         .filter(e => e.event === 9)
         .map(e => ({
           ...e,
+          // @ts-ignore
           dom: merged.dom.data[e.data.target]
         }))
         .map((e): ElementData => ({
+          // @ts-ignore
           hash: e.data.hash,
           selector: e.dom.selector,
           totalclicks: 1,
+          // @ts-ignore
           x: [e.data.eX],
+          // @ts-ignore
           y: [e.data.eY],
           // key: `${e.data.eX}-${e.data.eY}`,
           clicks: [1],
           points: 1,
         }))
-        // .reduce((acc, curr) => {
-        //   const res = acc[curr.key] ?? { ...curr };
-        //   const n = { ...res, totalclicks: res.totalclicks + 1 }
-        //   return {...acc, [curr.key]: n }
-        // }, {})
       
       viz.clickmap(Object.values(clicks));
     }
