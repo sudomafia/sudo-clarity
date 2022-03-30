@@ -9,6 +9,7 @@ export default async function handler(
 ) {
   try {
     await waitSync;
+    console.log(req.body.length)
     const decoded = decode(req.body);
     const data = await Data.create({ data: JSON.stringify(decoded) });
 

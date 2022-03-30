@@ -1,11 +1,13 @@
 import { Visualizer } from 'clarity-visualize';
-import { Data } from '../db';
+import { Data, waitSync } from '../db';
 import { MutableRefObject, useCallback, useState, useEffect, useMemo, useRef } from 'react';
 import { DecodedEvent } from 'clarity-decode/types/data';
 import { Activity, ElementData } from 'clarity-visualize/types/visualize';
 
 export async function getServerSideProps() {
-  const data = await Data.findAll();
+  await waitSync;
+  const data = await Data.findAll({ limit: 1000, order: [['createdAt', 'DESC']] });
+  console.log(data);
   return {
     props: { data: data.map(a => JSON.parse(a.toJSON().data)) }
   }
@@ -22,7 +24,7 @@ export default function Viz({ data }) {
         version: data[0].envelope.version,
         dom: merged.dom
       });
-      console.log(merged.dom)
+      console.log(merged)
       setEvents(merged.events);
       setViz(viz);
     }
