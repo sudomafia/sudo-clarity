@@ -1,15 +1,14 @@
 /** @type {import('next').NextConfig} */
+const nodeExternals = require('webpack-node-externals');
+
 const nextConfig = {
   reactStrictMode: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    console.log(config.plugins)
+    if (!isServer) return config;
     // Important: return the modified config
     return {
       ...config,
-      plugins: [
-        ...config.plugins,
-        new webpack.IgnorePlugin({ resourceRegExp: /^pg-native$/ })
-      ]
+      externals: [nodeExternals()]
     }
   }
 }
