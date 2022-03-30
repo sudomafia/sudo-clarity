@@ -1,15 +1,15 @@
 import { Visualizer } from 'clarity-visualize';
-import { Data, waitSync } from '../db';
-import { MutableRefObject, useCallback, useState, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
 import { DecodedEvent } from 'clarity-decode/types/data';
-import { Activity, ElementData } from 'clarity-visualize/types/visualize';
+import { ElementData } from 'clarity-visualize/types/visualize';
+import { db } from '../db';
 
 export async function getServerSideProps() {
-  await waitSync;
-  const data = await Data.findAll({ limit: 1000, order: [['createdAt', 'DESC']] });
+
+  const data = await db.many('SELECT * FROM clarities ORDER BY "updatedAt" DESC LIMIT 1000')
   console.log(data);
   return {
-    props: { data: data.map(a => JSON.parse(a.toJSON().data)) }
+    props: { data: data.map(a => JSON.parse(a.data)) }
   }
 }
 
