@@ -7,6 +7,7 @@ import { Activity, ElementData } from 'clarity-visualize/types/visualize';
 export async function getServerSideProps() {
   await waitSync;
   const data = await Data.findAll({ limit: 1000, order: [['createdAt', 'DESC']] });
+  console.log(data);
   return {
     props: { data: data.map(a => JSON.parse(a.toJSON().data)) }
   }
