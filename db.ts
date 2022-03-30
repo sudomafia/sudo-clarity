@@ -1,5 +1,7 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
-const sequelize = new Sequelize(process.env.CONNECTION_STRING)
+import * as pg from 'pg';
+
+const sequelize = new Sequelize(process.env.CONNECTION_STRING, { dialect: pg })
 
 export class Data extends Model { }
 
